@@ -42,9 +42,26 @@ export default function Application(props) {
       appointments,
     });
 
-    const promise = axios.put(`/api/appointments/${id}`, appointment);
+    return axios.put(`/api/appointments/${id}`, appointment);
+  };
 
-    return promise;
+  const cancelInterview = (id) => {
+    const appointment = {
+      ...state.appointments[id],
+      interview: null,
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment,
+    };
+
+    setState({
+      ...state,
+      appointments,
+    });
+
+    return axios.delete(`api/appointments/${id}`, appointments[id]);
   };
 
   const schedule = appointments.map((appointment) => {
@@ -57,6 +74,7 @@ export default function Application(props) {
         interview={interview}
         interviewers={interviewers}
         bookInterview={bookInterview}
+        cancelInterview={cancelInterview}
       />
     );
   });

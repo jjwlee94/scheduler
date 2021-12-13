@@ -6,6 +6,7 @@ import Empty from "./Empty";
 import Form from "./Form";
 import Status from "./Status";
 import Confirm from "./Confirm";
+import Error from "./Error";
 import useVisualMode from "hooks/useVisualMode";
 
 import "components/Appointment/styles.scss";
@@ -18,6 +19,8 @@ export default function Appointment(props) {
   const DELETING = "DELETING";
   const CONFIRM = "CONFIRM";
   const EDIT = "EDIT";
+  const ERROR_SAVE = "ERROR_SAVE";
+  const ERROR_DELETE = "ERROR_DELETE";
 
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
@@ -31,9 +34,14 @@ export default function Appointment(props) {
       interviewer,
     };
 
-    props.bookInterview(props.id, interview);
-
-    transition(SHOW);
+    props
+      .bookInterview(props.id, interview)
+      .then(() => {
+        transition(SHOW);
+      })
+      .catch(() => {
+        transition(ERROR_SAVE, true);
+      });
   };
 
   const confirm = () => {
@@ -41,11 +49,12 @@ export default function Appointment(props) {
   };
 
   const remove = () => {
-    transition(DELETING);
+    transition(DELETING, true);
 
-    props.cancelInterview(props.id);
-
-    transition(EMPTY);
+    props
+      .cancelInterview(props.id)
+      .then(() => transition(EMPTY))
+      .catch(() => transition(ERROR_DELETE, true));
   };
 
   const edit = () => {
@@ -72,7 +81,7 @@ export default function Appointment(props) {
         />
       )}
       {mode === SAVING && <Status message="Saving" />}
-      {mode === DELETING && <Status message="deleting" />}
+      {mode === DELETING && <Status message="Deleting" />}
       {mode === CONFIRM && (
         <Confirm
           message="Are you sure you would like to delete?"
@@ -88,6 +97,12 @@ export default function Appointment(props) {
           onCancel={() => transition(SHOW)}
           onSave={save}
         />
+      )}
+      {mode === ERROR_SAVE && (
+        <Error message="Could not save appointment." onClose={back} />
+      )}
+      {mode === ERROR_DELETE && (
+        <Error message="Could not cancel appointment." onClose={back} />
       )}
     </article>
   );

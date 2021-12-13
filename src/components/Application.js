@@ -37,12 +37,12 @@ export default function Application(props) {
 
     console.log(id, interview);
 
-    setState({
-      ...state,
-      appointments,
+    return axios.put(`/api/appointments/${id}`, appointment).then(() => {
+      setState({
+        ...state,
+        appointments,
+      });
     });
-
-    return axios.put(`/api/appointments/${id}`, appointment);
   };
 
   const cancelInterview = (id) => {
@@ -56,12 +56,12 @@ export default function Application(props) {
       [id]: appointment,
     };
 
-    setState({
-      ...state,
-      appointments,
+    return axios.delete(`api/appointments/${id}`, appointments[id]).then(() => {
+      setState({
+        ...state,
+        appointments,
+      });
     });
-
-    return axios.delete(`api/appointments/${id}`, appointments[id]);
   };
 
   const schedule = appointments.map((appointment) => {

@@ -15,6 +15,9 @@ export default function useVisualMode(initial) {
 
   const back = () => {
     const newHistory = [...history];
+    if (history.length === 1) {
+      return;
+    }
     newHistory.pop();
     setHistory(newHistory);
   };

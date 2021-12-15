@@ -8,7 +8,7 @@ Scheduler is a single-page web application built with React that allows users to
 !["Creating and modifying an interview appointment"](https://github.com/jjwlee94/scheduler/blob/master/docs/book-interview.gif)
 
 **Error messages when appointment cannot be saved or deleted**
-!["Error messages when appointment cannot be saved or deleted"](https://github.com/jjwlee94/scheduler/blob/master/docs/book-interview.gif)
+!["Error messages when appointment cannot be saved or deleted"](https://github.com/jjwlee94/scheduler/blob/master/docs/error-interview.gif)
 
 ## Setup
 

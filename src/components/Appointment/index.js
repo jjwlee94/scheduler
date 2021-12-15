@@ -34,14 +34,18 @@ export default function Appointment(props) {
       interviewer,
     };
 
-    props
-      .bookInterview(props.id, interview)
-      .then(() => {
-        transition(SHOW);
-      })
-      .catch(() => {
-        transition(ERROR_SAVE, true);
-      });
+    if (!interview.interviewer) {
+      transition(ERROR_SAVE, true);
+    } else {
+      props
+        .bookInterview(props.id, interview)
+        .then(() => {
+          transition(SHOW);
+        })
+        .catch(() => {
+          transition(ERROR_SAVE, true);
+        });
+    }
   };
 
   const confirm = () => {

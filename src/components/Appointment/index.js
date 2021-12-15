@@ -34,6 +34,7 @@ export default function Appointment(props) {
       interviewer,
     };
 
+    // Return error if interviewer is not selected, otherwise book interview
     if (!interview.interviewer) {
       transition(ERROR_SAVE, true);
     } else {

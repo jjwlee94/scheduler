@@ -13,10 +13,13 @@ export default function useApplicationData() {
 
   const fetchFreeSpots = (appointments) => {
     const appIDs = state.days.filter((day) => day.name === state.day);
+
     const todayApp = appIDs[0].appointments;
+
     const emptyApp = todayApp.filter(
       (app) => !appointments[app].interview
     ).length;
+
     return emptyApp;
   };
 
@@ -32,9 +35,11 @@ export default function useApplicationData() {
     };
 
     const days = [...state.days];
+
     const dayIndex = state.days.findIndex((day) =>
       day.appointments.includes(id)
     );
+
     days[dayIndex].spots = fetchFreeSpots(appointments);
 
     return axios.put(`/api/appointments/${id}`, appointment).then(() => {
@@ -54,9 +59,11 @@ export default function useApplicationData() {
     };
 
     const days = [...state.days];
+
     const dayIndex = state.days.findIndex((day) =>
       day.appointments.includes(id)
     );
+
     days[dayIndex].spots = fetchFreeSpots(appointments);
 
     return axios.delete(`api/appointments/${id}`, appointments[id]).then(() => {

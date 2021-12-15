@@ -1,4 +1,4 @@
-# Scheduler
+# Interview Scheduler
 
 Scheduler is a single-page web application built with React that allows users to create and modify interview schedules.
 
